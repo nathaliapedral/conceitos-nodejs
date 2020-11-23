@@ -38,7 +38,7 @@ app.put("/repositories/:id", (request, response) => {
   repositoryIndex = repositories.findIndex(repository => repository.id === id);
 
   if (repositoryIndex < 0 ){
-    return response.status(400).json([{error: 'Invalid ID'}]);
+    return response.status(400).json([{error: 'Invalid repository ID'}]);
   }
   const repository = {
     id,
@@ -58,6 +58,10 @@ app.delete("/repositories/:id", (request, response) => {
   const { id } = request.params;
   repositoryIndex = repositories.findIndex(repository => repository.id === id);
 
+  if (repositoryIndex < 0 ){
+    return response.status(400).json([{error: 'Invalid repository ID'}]);
+  }
+
   repositories.splice(repositoryIndex,1);
 
   return response.status(204).send();
@@ -68,7 +72,7 @@ app.post("/repositories/:id/like", (request, response) => {
   repositoryIndex = repositories.findIndex(repository => repository.id === id);
 
   if (repositoryIndex < 0 ){
-    return response.status(400).json([{error: 'Invalid ID'}]);
+    return response.status(400).json([{error: 'Invalid repository ID'}]);
   }
 
   repositories[repositoryIndex].likes += 1;
